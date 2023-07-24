@@ -2,18 +2,16 @@ package com.oslaman.todolist.database
 
 import androidx.room.Dao
 import androidx.room.Database
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.Update
-import com.oslaman.todolist.domain.ToDo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDosDao {
-    @Query("select * from ToDoEntity")
+    @Query("select * from ToDoEntity ORDER BY date ASC")
     fun getTodos(): Flow<List<ToDoEntity>?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

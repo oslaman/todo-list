@@ -16,16 +16,16 @@ class ToDosRepository @Inject constructor(
     val todos: Flow<List<ToDo>?> =
         appDatabase.todosDao.getTodos().map { it?.asDomainModel() }
 
-    suspend fun insertTodos(toDo: ToDo) {
+    fun insertTodos(toDo: ToDo) {
         try {
-            appDatabase.todosDao.insertTodos(listOf(ToDoEntity(toDo.id, toDo.title, toDo.date.toString(), toDo.isDone)))
+            appDatabase.todosDao.insertTodos(listOf(ToDoEntity(toDo.id, toDo.title, toDo.date, toDo.isDone)))
         } catch (e: Exception) {
             Timber.w(e)
         }
 
     }
 
-    suspend fun deleteCompleted() {
+    fun deleteCompleted() {
         try {
             appDatabase.todosDao.deleteCompleted()
         } catch (e: Exception) {
@@ -33,7 +33,7 @@ class ToDosRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteAll() {
+    fun deleteAll() {
         try {
             appDatabase.todosDao.deleteAll()
         } catch (e: Exception) {
@@ -41,7 +41,7 @@ class ToDosRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteById(id: String) {
+    fun deleteById(id: String) {
         try {
             appDatabase.todosDao.deleteById(id)
         } catch (e: Exception) {
@@ -49,17 +49,9 @@ class ToDosRepository @Inject constructor(
         }
     }
 
-    suspend fun updateToDo(id: Int, completed: Boolean) {
+    fun updateToDo(id: Int, completed: Boolean) {
         try {
             appDatabase.todosDao.updateCompleted(id, completed)
-        } catch (e: Exception) {
-            Timber.w(e)
-        }
-    }
-
-    suspend fun refreshTodos() {
-        try {
-            val users = appDatabase.todosDao.getTodos()
         } catch (e: Exception) {
             Timber.w(e)
         }
